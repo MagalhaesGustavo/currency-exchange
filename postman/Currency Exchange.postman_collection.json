@@ -12,7 +12,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8015/currencyexchange/v1/account/3",
+					"raw": "http://localhost:8015/currencyexchange/v1/account/63727e867b7e1c57e822685c",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -22,7 +22,7 @@
 						"currencyexchange",
 						"v1",
 						"account",
-						"3"
+						"63727e867b7e1c57e822685c"
 					]
 				}
 			},
@@ -35,7 +35,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"owner\": {\n        \"id\": 3,\n        \"name\": \"Lucca\"\n    },\n    \"currency\": \"BRL\",\n    \"balance\": 10000,\n    \"accountId\": 3\n}",
+					"raw": "{\n    \"owner\": {\n        \"name\": \"Lucca\"\n    },\n    \"currency\": \"BRL\",\n    \"balance\": 10000\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -72,7 +72,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"senderAccountId\": 1,\n    \"recipientAccountId\": 2,\n    \"currency\": \"EUR\",\n    \"amount\": 1\n}",
+					"raw": "{\n    \"senderAccountId\": \"63727f4b7b7e1c57e822685f\",\n    \"recipientAccountId\": \"63727f3c7b7e1c57e822685e\",\n    \"currency\": \"EUR\",\n    \"amount\": 100\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -107,7 +107,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8015/currencyexchange/v1/account/3",
+					"raw": "http://localhost:8015/currencyexchange/v1/account/63727e867b7e1c57e822685c",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -117,7 +117,7 @@
 						"currencyexchange",
 						"v1",
 						"account",
-						"3"
+						"63727e867b7e1c57e822685c"
 					]
 				}
 			},
