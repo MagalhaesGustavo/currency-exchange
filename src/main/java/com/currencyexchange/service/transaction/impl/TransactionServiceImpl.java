@@ -41,7 +41,7 @@ public class TransactionServiceImpl implements TransactionService {
         validateCurrency(transactionDTO.getCurrency());
         val senderAccount = getAccount(transactionDTO.getSenderAccountId());
         val recipientAccount = getAccount(transactionDTO.getRecipientAccountId());
-        var usedRate = new BigDecimal(0);
+        var usedRate = new BigDecimal(1);
 
         if (transactionDTO.getRecipientAccountId().equals(transactionDTO.getSenderAccountId()))
             throw new UnprocessableEntityException("It is not possible to transfer money to the same sender accountId " + senderAccount.getAccountId());

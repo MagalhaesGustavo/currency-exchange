@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class AccountDTOResponse {
 
+    private String accountId;
     @NotNull
     private OwnerDTO owner;
     @NotBlank
@@ -23,5 +24,4 @@ public class AccountDTOResponse {
     @PositiveOrZero
     @NotNull
     private BigDecimal balance;
-    private String accountId;
 }

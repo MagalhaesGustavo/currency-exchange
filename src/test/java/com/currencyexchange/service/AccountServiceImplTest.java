@@ -4,6 +4,7 @@ import com.currencyexchange.exceptions.NotFoundException;
 import com.currencyexchange.repository.AccountRepository;
 import com.currencyexchange.service.account.impl.AccountServiceImpl;
 import lombok.val;
+import org.assertj.core.util.Lists;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.money.UnknownCurrencyException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +21,7 @@ import static buider.AccountDTOBuilder.createAccountRequest;
 import static buider.AccountDomainBuilder.createAccountToInsert;
 import static buider.AccountDomainBuilder.createSenderAccount;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -80,6 +81,16 @@ public class AccountServiceImplTest {
 
         verify(accountRepository, times(1)).findAll();
         assertNotNull(account);
+    }
+
+    @Test
+    void getAllAccounts_empty() {
+        when(accountRepository.findAll()).thenReturn(Collections.emptyList());
+
+        val account = accountServiceImpl.getAllAccounts();
+
+        verify(accountRepository, times(1)).findAll();
+        assertTrue(account.isEmpty());
     }
 
     @Test
