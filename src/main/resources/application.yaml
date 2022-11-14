@@ -1,0 +1,27 @@
+server:
+  port: 8015
+  servlet:
+    contextPath: /currencyexchange
+spring:
+  application:
+    name: currencyexchange
+  data:
+    mongodb:
+      uri: ${MONGO_URI:mongodb://root:root@localhost:27017/currencyexchange?authSource=admin&authMechanism=SCRAM-SHA-256}
+      auto-index-creation: true
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /documentation
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: info, health, metrics
+exchange-rate-api:
+  baseurl: https://api.exchangerate.host
