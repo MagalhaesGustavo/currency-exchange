@@ -20,7 +20,7 @@ FeignClient
 
 Utilise the docker-compose file to up the MongoDB database, access the "docker" folder and run the command bellow 
 
-```$ docker-compose up -d```
+``` docker-compose up -d```
 
 Run the Application.class via IDE
 
@@ -33,6 +33,9 @@ Run the Application.class and access the URL: http://localhost:8015/currencyexch
 There is a Postman Collection commited at the "postman" folder named "Currency Exchange.postman_collection.json" to import at the Postman environment to execute the requests
 
 ## Unit Tests
+To run and collect the tests reports run the command bellow
+
+`` mvn clean test``
 
 To check the unit tests coverage access the Jacoco report at path: target -> jacoco-report -> index.html
 
