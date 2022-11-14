@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "53dbe9b3-38d5-424e-a789-a261309a2dd6",
+		"name": "Currency Exchange",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15225660"
+	},
+	"item": [
+		{
+			"name": "getAccountByID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8015/currencyexchange/v1/account/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"currencyexchange",
+						"v1",
+						"account",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createAccount",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"owner\": {\n        \"id\": 3,\n        \"name\": \"Lucca\"\n    },\n    \"currency\": \"BRL\",\n    \"balance\": 10000,\n    \"accountId\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8015/currencyexchange/v1/account",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"currencyexchange",
+						"v1",
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "performTransaction",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"senderAccountId\": 1,\n    \"recipientAccountId\": 2,\n    \"currency\": \"EUR\",\n    \"amount\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8015/currencyexchange/v1/transaction?",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"currencyexchange",
+						"v1",
+						"transaction"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteAccount",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8015/currencyexchange/v1/account/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"currencyexchange",
+						"v1",
+						"account",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllAccounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8015/currencyexchange/v1/account",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"currencyexchange",
+						"v1",
+						"account"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
