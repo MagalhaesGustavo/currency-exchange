@@ -1,6 +1,6 @@
 # Introduction
 
-This API has as objective to perfom transactions between two registers accounts using exchange rate for diferentts currencies using an external API to covert currencies
+This API has as objective to perform transactions between two registered accounts using exchange rate for differents currencies, communicating to an external API to convert currencies
 
 External API utilised: https://exchangerate.host/#/#docs
 
@@ -18,7 +18,7 @@ FeignClient
 
 ## How to run
 
-Utilise the docker-compose file to up the MongoDB database 
+Utilise the docker-compose file to up the MongoDB database, access the "docker" folder and run the command bellow 
 
 ```$ docker-compose up -d```
 
@@ -30,17 +30,17 @@ Run the Application.class and access the URL: http://localhost:8015/currencyexch
 
 ## Collection Test
 
-There is a Postman Collection commited at the root path named "Currency Exchange.postman_collection.json" to import at the Postman enviroment to test the methods
+There is a Postman Collection commited at the "postman" folder named "Currency Exchange.postman_collection.json" to import at the Postman environment to execute the requests
 
 ## Unit Tests
 
-To check de tests coverage access the Jacoco report at path: target -> jacoco-report -> index.html
+To check the unit tests coverage access the Jacoco report at path: target -> jacoco-report -> index.html
 
-To check the mutation tests access the Pitest report at path: target -> pit-reports -> index.html
+To check the mutation tests report access the Pitest report at path: target -> pit-reports -> index.html
 
 ## Metrics
 
-To watch the metrics, actuator is configured and the metrics can be accessed at the URL: http://localhost:8015/currencyexchange/actuator 
+To watch the metrics, actuator is configured in the project and the metrics can be accessed in the URL: http://localhost:8015/currencyexchange/actuator 
 
 
 
