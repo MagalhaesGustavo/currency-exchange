@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.currencyexchange.Utils.MonetaryUtils.validateCurrency;
+import static com.currencyexchange.utils.MonetaryUtils.validateCurrency;
 import static java.util.stream.Collectors.toList;
 
 @Service

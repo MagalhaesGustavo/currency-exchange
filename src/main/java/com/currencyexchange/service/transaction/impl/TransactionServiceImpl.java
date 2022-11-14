@@ -1,7 +1,7 @@
 package com.currencyexchange.service.transaction.impl;
 
 
-import com.currencyexchange.Utils.MonetaryUtils;
+import com.currencyexchange.utils.MonetaryUtils;
 import com.currencyexchange.domain.AccountDomain;
 import com.currencyexchange.dto.ExchangeApiDTO;
 import com.currencyexchange.dto.TransactionDTO;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
-import static com.currencyexchange.Utils.MonetaryUtils.*;
+import static com.currencyexchange.utils.MonetaryUtils.*;
 import static java.util.Objects.isNull;
 
 @Service

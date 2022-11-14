@@ -1,4 +1,4 @@
-package com.currencyexchange.Utils;
+package com.currencyexchange.utils;
 
 import org.springframework.stereotype.Component;
 
