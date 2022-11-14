@@ -1,6 +1,7 @@
 package com.currencyexchange.controller.account;
 
-import com.currencyexchange.dto.AccountDTO;
+import com.currencyexchange.dto.AccountDTORequest;
+import com.currencyexchange.dto.AccountDTOResponse;
 import com.currencyexchange.exceptions.ApiError;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -21,7 +22,7 @@ public interface AccountController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = AccountDTO.class))),
+                    schema = @Schema(implementation = AccountDTOResponse.class))),
             @ApiResponse(responseCode = "404", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = ApiError.class))),
@@ -29,14 +30,14 @@ public interface AccountController {
                     mediaType = "application/json",
                     schema = @Schema(implementation = ApiError.class)))})
     @PostMapping
-    ResponseEntity<AccountDTO> createAccount(@Valid @RequestBody AccountDTO accountDTO);
+    ResponseEntity<AccountDTOResponse> createAccount(@Valid @RequestBody AccountDTORequest accountDTORequest);
 
     @Tag(name = "Account")
     @Operation(summary = "This API fetches one account by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = AccountDTO.class))),
+                    schema = @Schema(implementation = AccountDTOResponse.class))),
             @ApiResponse(responseCode = "404", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = ApiError.class))),
@@ -44,14 +45,14 @@ public interface AccountController {
                     mediaType = "application/json",
                     schema = @Schema(implementation = ApiError.class)))})
     @GetMapping(path = "/{accountId}")
-    ResponseEntity<AccountDTO> getAccountByAccountId(@PathVariable("accountId") String accountId);
+    ResponseEntity<AccountDTOResponse> getAccountByAccountId(@PathVariable("accountId") String accountId);
 
     @Tag(name = "Account")
     @Operation(summary = "This API fetches all registered accounts")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = AccountDTO.class))),
+                    schema = @Schema(implementation = AccountDTOResponse.class))),
             @ApiResponse(responseCode = "404", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = ApiError.class))),
@@ -59,14 +60,14 @@ public interface AccountController {
                     mediaType = "application/json",
                     schema = @Schema(implementation = ApiError.class)))})
     @GetMapping
-    ResponseEntity<List<AccountDTO>> getAllAccounts();
+    ResponseEntity<List<AccountDTOResponse>> getAllAccounts();
 
     @Tag(name = "Account")
     @Operation(summary = "This API delete an account by its id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", content = @Content(
                     mediaType = "application/json",
-                    schema = @Schema(implementation = AccountDTO.class))),
+                    schema = @Schema(implementation = AccountDTOResponse.class))),
             @ApiResponse(responseCode = "404", content = @Content(
                     mediaType = "application/json",
                     schema = @Schema(implementation = ApiError.class))),

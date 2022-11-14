@@ -2,6 +2,7 @@ package buider;
 
 import com.currencyexchange.domain.AccountDomain;
 import com.currencyexchange.domain.OwnerDomain;
+import org.bson.types.ObjectId;
 
 import java.math.BigDecimal;
 
@@ -13,7 +14,7 @@ public class AccountDomainBuilder {
                         .id(1)
                         .name("Gustavo")
                         .build())
-                .accountId(1)
+                .accountId(new ObjectId())
                 .currency("BRL")
                 .balance(BigDecimal.valueOf(100.00))
                 .build();
@@ -25,7 +26,7 @@ public class AccountDomainBuilder {
                         .id(2)
                         .name("Luis")
                         .build())
-                .accountId(2)
+                .accountId(new ObjectId())
                 .currency("BRL")
                 .balance(BigDecimal.valueOf(200.00))
                 .build();
@@ -37,9 +38,21 @@ public class AccountDomainBuilder {
                         .id(2)
                         .name("Gustavo")
                         .build())
-                .accountId(2)
+                .accountId(new ObjectId())
                 .currency("BRL")
                 .balance(BigDecimal.valueOf(00.00))
+                .build();
+    }
+
+    public static AccountDomain createAccountToInsert() {
+        return AccountDomain.builder()
+                .owner(OwnerDomain.builder()
+                        .id(2)
+                        .name("Gustavo")
+                        .build())
+                .currency("BRL")
+                .accountId(null)
+                .balance(BigDecimal.valueOf(100.00))
                 .build();
     }
 }

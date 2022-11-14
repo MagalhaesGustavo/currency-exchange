@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.money.UnknownCurrencyException;
 import java.math.BigDecimal;
 import java.util.Optional;
 
@@ -56,7 +57,7 @@ public class TransactionServiceImplTest {
     }
 
     @Test
-    void createTransaction_successWithConversion() throws InterruptedException {
+    void createTransaction_successWithConversion() {
         val transactionDTO = createTransaction();
         val senderAccount = createSenderAccount();
         val recipientAccount = createRecipientAccount();
@@ -78,7 +79,7 @@ public class TransactionServiceImplTest {
     }
 
     @Test
-    void createTransaction_withConversionFail() throws InterruptedException {
+    void createTransaction_withConversionFail() {
         val transactionDTO = createTransaction();
         var senderAccount = createSenderAccount();
         var recipientAccount = createRecipientAccount();
@@ -123,5 +124,12 @@ public class TransactionServiceImplTest {
 
         assertThatThrownBy(() -> transactionServiceImpl.performTransaction(transactionDTO)).isInstanceOf(UnprocessableEntityException.class);
         verify(accountRepository, times(2)).findByAccountId(any());
+    }
+
+    @Test
+    void createTransaction_error_currencyNotValid() {
+        var transactionDTO = createTransaction();
+        transactionDTO.setCurrency("BLA");
+        assertThatThrownBy(() -> transactionServiceImpl.performTransaction(transactionDTO)).isInstanceOf(UnknownCurrencyException.class);
     }
 }

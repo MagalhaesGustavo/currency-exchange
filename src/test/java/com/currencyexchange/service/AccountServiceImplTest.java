@@ -1,21 +1,22 @@
 package com.currencyexchange.service;
 
-import com.currencyexchange.domain.AccountDomain;
 import com.currencyexchange.exceptions.NotFoundException;
-import com.currencyexchange.exceptions.UnprocessableEntityException;
 import com.currencyexchange.repository.AccountRepository;
 import com.currencyexchange.service.account.impl.AccountServiceImpl;
 import lombok.val;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
+import javax.money.UnknownCurrencyException;
+import java.util.List;
 import java.util.Optional;
 
-import static buider.AccountDTOBuilder.createAccount;
+import static buider.AccountDTOBuilder.createAccountRequest;
+import static buider.AccountDomainBuilder.createAccountToInsert;
 import static buider.AccountDomainBuilder.createSenderAccount;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,79 +32,72 @@ public class AccountServiceImplTest {
     @Mock
     private AccountRepository accountRepository;
 
-    @Mock
-    private AccountDomain accountDomain;
-
     @Test
     void createAccount_success() {
-        val accountDTOBuilder = createAccount();
+        var accountDTOBuilder = createAccountRequest();
         val accountDomainBuilder = createSenderAccount();
-        when(accountRepository.findByAccountId(String.valueOf(accountDTOBuilder.getAccountId()))).thenReturn(Optional.empty());
-        when(accountRepository.insert(accountDomainBuilder)).thenReturn(accountDomainBuilder);
-
+        val newAccount = createAccountToInsert();
+        when(accountRepository.findFirstByOrderByOwnerDesc()).thenReturn(Optional.of(accountDomainBuilder));
+        when(accountRepository.insert(newAccount)).thenReturn(newAccount);
         val account = accountServiceImpl.createAccount(accountDTOBuilder);
 
-        verify(accountRepository, times(1)).findByAccountId(String.valueOf(accountDTOBuilder.getAccountId()));
-        verify(accountRepository, times(1)).insert(accountDomainBuilder);
+        verify(accountRepository, times(1)).findFirstByOrderByOwnerDesc();
         assertNotNull(account);
     }
 
     @Test
-    void createAccount_error() {
-        val accountDTOBuilder = createAccount();
-        when(accountRepository.findByAccountId(String.valueOf(accountDTOBuilder.getAccountId()))).thenReturn(Optional.of(createSenderAccount()));
-        assertThatThrownBy(() -> accountServiceImpl.createAccount(accountDTOBuilder)).isInstanceOf(UnprocessableEntityException.class);
+    void createAccount_error_currencyNotValid() {
+        var accountDTOBuilder = createAccountRequest();
+        accountDTOBuilder.setCurrency("BLA");
+        assertThatThrownBy(() -> accountServiceImpl.createAccount(accountDTOBuilder)).isInstanceOf(UnknownCurrencyException.class);
     }
 
     @Test
     void get_success() {
-        val accountDTOBuilder = createAccount();
-        val accountDomainBuilder = createSenderAccount();
-        when(accountRepository.findByAccountId(String.valueOf(accountDTOBuilder.getAccountId()))).thenReturn(Optional.of(accountDomainBuilder));
+        var accountDomainBuilder = createSenderAccount();
+        when(accountRepository.findByAccountId(accountDomainBuilder.getAccountId().toString())).thenReturn(Optional.of(accountDomainBuilder));
 
-        val account = accountServiceImpl.getAccountByAccountId(String.valueOf(accountDTOBuilder.getAccountId()));
+        val account = accountServiceImpl.getAccountByAccountId(String.valueOf(accountDomainBuilder.getAccountId()));
 
-        verify(accountRepository, times(1)).findByAccountId(String.valueOf(accountDTOBuilder.getAccountId()));
+        verify(accountRepository, times(1)).findByAccountId(String.valueOf(accountDomainBuilder.getAccountId()));
         assertNotNull(account);
-        assertEquals(accountDTOBuilder, account);
+        assertEquals(accountDomainBuilder.getAccountId().toString(), account.getAccountId());
     }
 
     @Test
     void get_error() {
-        val accountDTOBuilder = createAccount();
-        when(accountRepository.findByAccountId(String.valueOf(accountDTOBuilder.getAccountId()))).thenReturn(Optional.empty());
-        assertThatThrownBy(() -> accountServiceImpl.getAccountByAccountId(String.valueOf(accountDTOBuilder.getAccountId()))).isInstanceOf(NotFoundException.class);
+        val accountId = new ObjectId().toString();
+        when(accountRepository.findByAccountId(accountId)).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> accountServiceImpl.getAccountByAccountId(accountId)).isInstanceOf(NotFoundException.class);
     }
 
     @Test
     void getAllAccounts_success() {
-        val accountDTOBuilder = createAccount();
-        val accountDomainBuilder = createSenderAccount();
-        when(accountRepository.findAll()).thenReturn(Arrays.asList(accountDomainBuilder));
+        var accountDomainBuilder = createSenderAccount();
+        when(accountRepository.findAll()).thenReturn(List.of(accountDomainBuilder));
 
         val account = accountServiceImpl.getAllAccounts();
 
         verify(accountRepository, times(1)).findAll();
         assertNotNull(account);
-        assertEquals(Arrays.asList(accountDTOBuilder), account);
     }
 
     @Test
     void delete_success() {
-        val accountDTOBuilder = createAccount();
+        val accountId = new ObjectId().toString();
         val accountDomainBuilder = createSenderAccount();
-        when(accountRepository.findByAccountId(String.valueOf(accountDTOBuilder.getAccountId()))).thenReturn(Optional.of(accountDomainBuilder));
+        when(accountRepository.findByAccountId(accountId)).thenReturn(Optional.of(accountDomainBuilder));
         doNothing().when(accountRepository).delete(accountDomainBuilder);
 
-        accountServiceImpl.deleteAccountByAccountId(String.valueOf(accountDTOBuilder.getAccountId()));
+        accountServiceImpl.deleteAccountByAccountId(accountId);
 
         verify(accountRepository, times(1)).delete(accountDomainBuilder);
     }
 
     @Test
     void delete_error() {
-        val accountDTOBuilder = createAccount();
-        when(accountRepository.findByAccountId(String.valueOf(accountDTOBuilder.getAccountId()))).thenReturn(Optional.empty());
-        assertThatThrownBy(() -> accountServiceImpl.deleteAccountByAccountId(String.valueOf(accountDTOBuilder.getAccountId()))).isInstanceOf(NotFoundException.class);
+        val accountId = new ObjectId().toString();
+        when(accountRepository.findByAccountId(accountId)).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> accountServiceImpl.deleteAccountByAccountId(accountId)).isInstanceOf(NotFoundException.class);
     }
 }

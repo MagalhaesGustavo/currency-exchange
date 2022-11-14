@@ -14,16 +14,14 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransactionDTO {
+public class AccountDTOResponse {
 
     @NotNull
-    private String senderAccountId;
-    @NotNull
-    private String recipientAccountId;
-    @PositiveOrZero
-    @NotNull
-    private BigDecimal amount;
+    private OwnerDTO owner;
     @NotBlank
     private String currency;
-    private BigDecimal rate;
+    @PositiveOrZero
+    @NotNull
+    private BigDecimal balance;
+    private String accountId;
 }

@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface AccountRepository extends MongoRepository<AccountDomain, String> {
 
     Optional<AccountDomain> findByAccountId(String accountId);
+
+    Optional<AccountDomain>findFirstByOrderByOwnerDesc();
 }

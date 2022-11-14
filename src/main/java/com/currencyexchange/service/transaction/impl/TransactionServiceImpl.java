@@ -91,9 +91,9 @@ public class TransactionServiceImpl implements TransactionService {
         return account.getBalance().compareTo(transactionAmount) > VALUE_BIGGER_THEN;
     }
 
-    private AccountDomain getAccount(int accountId) {
+    private AccountDomain getAccount(String accountId) {
         return accountRepository
-                .findByAccountId(String.valueOf(accountId))
+                .findByAccountId(accountId)
                 .orElseThrow(() -> new NotFoundException("Account not found id: " + accountId));
     }
 

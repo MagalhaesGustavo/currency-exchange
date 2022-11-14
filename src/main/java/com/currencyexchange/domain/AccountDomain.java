@@ -1,11 +1,12 @@
 package com.currencyexchange.domain;
 
 
-import com.currencyexchange.dto.AccountDTO;
+import com.currencyexchange.dto.AccountDTORequest;
 import com.currencyexchange.dto.OwnerDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -20,7 +21,7 @@ public class AccountDomain {
 
     @Id
     @Field("account")
-    private int accountId;
+    private ObjectId accountId;
 
     @Field("owner")
     private OwnerDomain owner;
@@ -31,16 +32,15 @@ public class AccountDomain {
     @Field("balance")
     private BigDecimal balance;
 
-    public static AccountDomain valueOf(AccountDTO accountDTO) {
+    public static AccountDomain valueOf(AccountDTORequest accountDTORequest) {
         return AccountDomain.builder()
-                .owner(buildOwner(accountDTO.getAccountId(), accountDTO.getOwner()))
-                .balance(accountDTO.getBalance())
-                .currency(accountDTO.getCurrency())
-                .accountId(accountDTO.getAccountId())
+                .owner(buildOwner(accountDTORequest.getOwner()))
+                .balance(accountDTORequest.getBalance())
+                .currency(accountDTORequest.getCurrency())
                 .build();
     }
 
-    private static OwnerDomain buildOwner(int id,OwnerDTO owner) {
-        return OwnerDomain.builder().id(id).name(owner.getName()).build();
+    private static OwnerDomain buildOwner(OwnerDTO owner) {
+        return OwnerDomain.builder().id(owner.getId()).name(owner.getName()).build();
     }
 }

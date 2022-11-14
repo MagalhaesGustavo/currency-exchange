@@ -1,16 +1,17 @@
 package com.currencyexchange.service.account;
 
-import com.currencyexchange.dto.AccountDTO;
+import com.currencyexchange.dto.AccountDTORequest;
+import com.currencyexchange.dto.AccountDTOResponse;
 
 import java.util.List;
 
 public interface AccountService {
 
-    AccountDTO createAccount(AccountDTO accountDTO);
+    AccountDTOResponse createAccount(AccountDTORequest accountDTORequest);
 
-    AccountDTO getAccountByAccountId(String accountId);
+    AccountDTOResponse getAccountByAccountId(String accountId);
 
-    List<AccountDTO> getAllAccounts();
+    List<AccountDTOResponse> getAllAccounts();
 
     void deleteAccountByAccountId(String accountId);
 }

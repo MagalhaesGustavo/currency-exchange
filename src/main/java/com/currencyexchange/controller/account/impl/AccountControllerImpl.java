@@ -1,7 +1,8 @@
 package com.currencyexchange.controller.account.impl;
 
 import com.currencyexchange.controller.account.AccountController;
-import com.currencyexchange.dto.AccountDTO;
+import com.currencyexchange.dto.AccountDTORequest;
+import com.currencyexchange.dto.AccountDTOResponse;
 import com.currencyexchange.service.account.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,19 +24,19 @@ public class AccountControllerImpl implements AccountController {
     private AccountService accountService;
 
     @PostMapping
-    public ResponseEntity<AccountDTO> createAccount(@Valid @RequestBody AccountDTO accountDTO) {
+    public ResponseEntity<AccountDTOResponse> createAccount(@Valid @RequestBody AccountDTORequest accountDTORequest) {
         return ResponseEntity.status(CREATED)
-                .body(accountService.createAccount(accountDTO));
+                .body(accountService.createAccount(accountDTORequest));
     }
 
     @GetMapping(path = "/{accountId}")
-    public ResponseEntity<AccountDTO> getAccountByAccountId(@PathVariable("accountId") String accountId) {
+    public ResponseEntity<AccountDTOResponse> getAccountByAccountId(@PathVariable("accountId") String accountId) {
         return ResponseEntity.status(OK)
                 .body(accountService.getAccountByAccountId(accountId));
     }
 
     @GetMapping
-    public ResponseEntity<List<AccountDTO>> getAllAccounts() {
+    public ResponseEntity<List<AccountDTOResponse>> getAllAccounts() {
         return ResponseEntity.status(OK)
                 .body(accountService.getAllAccounts());
     }
